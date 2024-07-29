@@ -1,5 +1,7 @@
-# MinedMap Legacy Generator
+# MinedMap Viewer Generator
 
-Transforms a Minecraft map into a file usable by the MinedMap Legacy viewer.
+Transforms a Minecraft map into a file usable by the MinedMap viewer.
 
-[MinedMap Legacy](https://github.com/Azerxim/MinedMap-Legacy)
+Viewer version 2.2.0
+
+[MinedMap](https://github.com/neocturne/MinedMap)
