@@ -56,8 +56,8 @@ if __name__ == "__main__":
         exit()
     
     # Overworld
-    # maps['vanilla']['overworld'] = pathMap
-    # print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Overworld{utils.bcolors.RESET}')
+    maps['vanilla']['overworld'] = pathMap
+    print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Overworld{utils.bcolors.RESET}')
 
     # Nether
     maps['vanilla']['nether:*'] = maps['vanilla']['nether'] = f'{pathMap}/DIM-1'
