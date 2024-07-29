@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MinedMap</title>
+    <link rel="stylesheet" href="leaflet-1.9.4/leaflet.css" />
+    <link rel="stylesheet" href="css/minedmap.css" />
+    <link rel="stylesheet" href="css/display.css" />
+    <link rel="stylesheet" href="css/colors.css" />
+    <link rel="stylesheet" href="css/bulma.td.css" />
+    <script src="leaflet-1.9.4/leaflet.js"></script>
+    <script src="MinedMap.js"></script>
+  </head>
+  <body>
+    <div class="menu-date flex fd_rowr jc-end bg-smoothwhite">
+      <span class="menu-date">29/07/2024</span>
+    </div>
+    
+    <div class="menu-div">
+      <div class="flex-end fd-col fw-on" id="Menu">
+        <a href="overworld" class="menu-button button is-TD-smoothwhite">overworld</a>
+<a href="nether" class="menu-button button is-TD-ultradarkblue">nether</a>
+<a href="nether_toit" class="menu-button button is-TD-smoothwhite">nether:toit</a>
+<a href="end" class="menu-button button is-TD-smoothwhite">end</a>
+<a href="mbu_aegol" class="menu-button button is-TD-smoothwhite">mbu:aegol</a>
+<a href="minecraft_islands_overworld" class="menu-button button is-TD-smoothwhite">minecraft:islands_overworld</a>
+
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <script type="text/javascript">
+      createMap();
+    </script>
+  </body>
+</html>

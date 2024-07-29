@@ -39,7 +39,7 @@ DATEnTIME = datetime.now().strftime("%Y%m%d-%H%M")
 
 
 # ===== Export =====
-export_folder = 'export/'
+export_folder = 'viewer/data'
 if (not file.exist(export_folder)):
     file.createdir(export_folder)
     

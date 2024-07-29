@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MinedMap</title>
+    <link rel="stylesheet" href="leaflet-1.9.4/leaflet.css" />
+    <link rel="stylesheet" href="css/minedmap.css" />
+    <link rel="stylesheet" href="css/display.css" />
+    <link rel="stylesheet" href="css/colors.css" />
+    <link rel="stylesheet" href="css/bulma.td.css" />
+    <script src="leaflet-1.9.4/leaflet.js"></script>
+    <script src="MinedMap.js"></script>
+  </head>
+  <body>
+    <div class="menu-date flex fd_rowr jc-end bg-smoothwhite">
+      <date></date>
+    </div>
+    
+    <div class="menu-div">
+      <div class="flex-end fd-col fw-on" id="Menu">
+        <menu></menu>
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <script type="text/javascript">
+      createMap();
+    </script>
+  </body>
+</html>

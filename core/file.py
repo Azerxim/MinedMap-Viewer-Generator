@@ -1,5 +1,5 @@
-# Version 1.2
-# 2024.07.27
+# Version 1.3
+# 2024.07.29
 import os
 import json
 
@@ -82,6 +82,11 @@ def delete(path):
 	else:
 		print(f"Impossible de supprimer le fichier {path} car il n'existe pas")
 		return False
+
+
+# •••••••••••••••••••••••••••••••••••••••
+def copy(source, destination):
+    os.popen(f'cp {source} {destination}')
 	
 
 
@@ -105,6 +110,11 @@ def listdirs(dirs, path):
 			dirs.append(d)
 			listdirs(dirs, d)
 	return dirs
+
+
+# •••••••••••••••••••••••••••••••••••••••
+def copy_dir(source, destination):
+    os.popen(f'cp -r {source} {destination}')
 
 
 
