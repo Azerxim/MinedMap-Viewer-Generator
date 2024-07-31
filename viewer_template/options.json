@@ -1,0 +1,12 @@
+{
+    "embed": {
+        "title": "Embed",
+        "icon": "fa-solid fa-eye",
+        "hidden": 0
+    },
+    "editor": {
+        "title": "Editor",
+        "icon": "fa-solid fa-pen-to-square",
+        "hidden": 1
+    }
+}

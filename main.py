@@ -7,19 +7,6 @@ from core import utils, file, mef
 def generate(exe, src, export):
     subprocess.call([f'{exe}', src, export])
 
-# •••••••••••••••••••••••••••••••••••••••
-def builder_menu(name, maps):
-    export = ""
-    for one in maps:
-        if one != "date":
-            for map in maps[one]:
-                mapname = mef.MEF(map, 'nether:surface', 'nether')
-                color = 'smoothwhite'
-                if map == name:
-                    color = 'ultradarkblue'
-                export += f'<a href="{maps[one][map]}" class="menu-button button is-TD-{color}">{mapname}</a>\n'
-    return export
-
 
 # •••••••••••••••••••••••••••••••••••••••
 MinedMap = 'MinedMap'
@@ -29,7 +16,7 @@ maps = export_maps = {
     'vanilla': {
         'overworld': "",
         'nether:surface': "",
-        'nether:toit': "",
+        'nether:roof': "",
         'end': ""
     },
     'dimensions': {},
@@ -47,25 +34,25 @@ if __name__ == "__main__":
     # •••••••••••••••••••••••••••
     print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
     print(f'{utils.bcolors.purple}CONFIG{utils.bcolors.RESET}{utils.bcolors.RESET}')
-    print('Entrer le lien vers le dossier de la map minecraft:')
+    print('Enter the link to the minecraft map folder:')
     pathMap = mef.WSL(pathMap)
     print(f'{utils.bcolors.blue}RESULT{utils.bcolors.RESET}    {pathMap}{utils.bcolors.RESET}')
 
     # •••••••••••••••••••••••••••
     # print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
     # print(f'{utils.bcolors.purple}CONFIG{utils.bcolors.RESET}{utils.bcolors.RESET}')
-    # print('Entrer le lien vers le dossier ou sera généré la cartographie:')
+    # print('Enter the link to the folder where the mapping will be generated:')
     pathExport=mef.WSL(pathExport, utils.export_folder)
     # print(f'{utils.bcolors.blue}RESULT{utils.bcolors.RESET}    {pathExport}{utils.bcolors.RESET}')
 
     # •••••••••••••••••••••••••••
     print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
-    print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Conversion de la sauvegarde{utils.bcolors.RESET}')
+    print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Converting the save{utils.bcolors.RESET}')
     if file.exist(f'{pathMap}/level.dat'):
         pathLevel = f'{pathMap}/level.dat'
-        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        level.dat récupéré{utils.bcolors.RESET}')
+        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        level.dat{utils.bcolors.RESET}')
     else:
-        print(f'{utils.bcolors.red}ERROR{utils.bcolors.RESET}     Le fichier level.dat est manquant{utils.bcolors.RESET}')
+        print(f'{utils.bcolors.red}ERROR{utils.bcolors.RESET}     The level.dat file is missing{utils.bcolors.RESET}')
         exit()
     
     # Overworld
@@ -73,7 +60,7 @@ if __name__ == "__main__":
     print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Overworld{utils.bcolors.RESET}')
 
     # Nether
-    maps['vanilla']['nether:toit'] = maps['vanilla']['nether:surface'] = f'{pathMap}/DIM-1'
+    maps['vanilla']['nether:roof'] = maps['vanilla']['nether:surface'] = f'{pathMap}/DIM-1'
     file.copy(f'"{pathLevel}"', f'"{maps["vanilla"]["nether:surface"]}/level.dat"')
     print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Nether{utils.bcolors.RESET}')
 
@@ -83,7 +70,7 @@ if __name__ == "__main__":
     print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        End{utils.bcolors.RESET}')
 
     # Dimensions custom
-    print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Dimension custom{utils.bcolors.RESET}')
+    print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Custom Dimensions{utils.bcolors.RESET}')
     pathDC = f'{pathMap}/dimensions'
     pathDCs = {}
     for rootdir, dirs, files in os.walk(pathDC):
@@ -100,7 +87,7 @@ if __name__ == "__main__":
                             pathDCs[parentd[0]] = []
                             pathDCs[parentd[0]].append(parentd[1])
     if pathDCs is {}:
-        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Aucune dimension custom{utils.bcolors.RESET}')
+        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        No custom dimension{utils.bcolors.RESET}')
     for one in pathDCs:
         for two in pathDCs[one]:
             file.copy(f'"{pathLevel}"', f'"{pathDC}/{one}/{two}/level.dat"')
@@ -108,7 +95,7 @@ if __name__ == "__main__":
 
     # •••••••••••••••••••••••••••
     print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
-    print(f'{utils.bcolors.purple}VIEWER{utils.bcolors.RESET}    Creation du viewer{utils.bcolors.RESET}')
+    print(f'{utils.bcolors.purple}VIEWER{utils.bcolors.RESET}    Viewer creation{utils.bcolors.RESET}')
     file.copy_dir('viewer_template/*', f'viewer/')
     time.sleep(6)
 
@@ -121,7 +108,7 @@ if __name__ == "__main__":
                 exe = 'MinedMap-2.2.0'
                 if ':surface' in map:
                     exe = '1.19/Nether'
-                name = mef.MEF(map, 'nether:toit', 'nether_toit')
+                name = mef.MEF(map, 'nether:roof', 'nether_roof')
                 name = mef.MEF(name, 'nether:surface', 'nether')
                 name = mef.MEF(name, ':', '_')
                 if maps[one][map] != '':
@@ -135,31 +122,7 @@ if __name__ == "__main__":
 
     # •••••••••••••••••••••••••••
     # Viewer builder
-    export_maps = file.json_read(f'{pathExport}/maps.json')
-
     print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
-    for one in export_maps:
-        if one != "date":
-            for map in export_maps[one]:
-                name = mef.MEF(map, 'nether:toit', 'nether_toit')
-                name = mef.MEF(name, 'nether:surface', 'nether')
-                name = mef.MEF(name, ':', '_')
-                print(f'{utils.bcolors.purple}VIEWER{utils.bcolors.RESET}    Creation de viewer/{name}.html{utils.bcolors.RESET}')
-                file.copy('viewer/index.html', f'viewer/{name}.html')
-                time.sleep(2)
-                f = file.open_read(f'viewer/{name}.html')
-                datas = f.readlines()
-                f.close()
-                data = ''
-                for line in datas:
-                    modif_line = line
-                    if '<date></date>' in line:
-                        modif_line = mef.MEF(modif_line, '<date></date>', f'<span class="menu-date">{export_maps["date"]}</span>')
-                    
-                    if '<menu></menu>' in line:
-                        modif_line = mef.MEF(modif_line, '<menu></menu>', builder_menu(map, export_maps))
-                    data += modif_line
-                if data != '':
-                    file.write(f'viewer/{name}.html', data)
-    file.copy('viewer/overworld.html', 'viewer/index.html')
+    print(f'{utils.bcolors.purple}GENERATE{utils.bcolors.RESET}  {pathExport}/maps.json{utils.bcolors.RESET}')
+    export_maps = file.json_read(f'{pathExport}/maps.json')
 
