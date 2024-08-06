@@ -61,6 +61,7 @@ async function BuildOptions() {
     const response0 = await fetch("options.json", {cache: 'no-store'});
 	const options_data = await response0.json();
     const option_div = document.getElementById("Options");
+    const option_button_div = document.getElementById("OptionsButtons");
 
     for (var key in options_data) {
         if (!options_data[key].hidden) {
@@ -108,7 +109,14 @@ async function BuildOptions() {
                 a.appendChild(i)
             }
             a.appendChild(span)
-            option_div.appendChild(a)
+            if (options_data[key].type == 'button') {
+                a.href = options_data[key].href;
+                a.target = '_blank';
+                option_button_div.appendChild(a)
+            }
+            else {
+                option_div.appendChild(a)
+            }
         }
     }
 }

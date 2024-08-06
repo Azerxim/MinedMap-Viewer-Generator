@@ -1,12 +1,21 @@
 {
     "embed": {
+        "type": "option",
         "title": "Embed",
         "icon": "fa-solid fa-eye",
         "hidden": 0
     },
     "editor": {
+        "type": "option",
         "title": "Editor",
         "icon": "fa-solid fa-pen-to-square",
         "hidden": 1
+    },
+    "github": {
+        "type": "button",
+        "href": "https://github.com/Azerxim/MinedMap-Viewer-Generator",
+        "title": "github",
+        "icon": "fa-brand fa-github",
+        "hidden": 0
     }
 }
