@@ -83,8 +83,14 @@ async function BuildOptions() {
             a.href = pathname.data
             if ((key == 'embed' || key == 'editor') && (pathname.file != key)) {
                 a.href += '-' + key;
+                if (pathname.option != '') {
+                    a.href += '-' + pathname.option;
+                }
             }
             if ((key != 'embed' && key != 'editor') && (pathname.option != key)) {
+                if (pathname.file != '') {
+                    a.href += '-' + pathname.file;
+                }
                 a.href += '-' + key;
             }
 
