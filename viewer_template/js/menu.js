@@ -81,17 +81,22 @@ async function BuildOptions() {
 
             // <a> href
             a.href = pathname.data
-            if ((key == 'embed' || key == 'editor') && (pathname.file != key)) {
-                a.href += '-' + key;
+            if ((key == 'embed' || key == 'editor')) {
+                if (pathname.file != key) {
+                    a.href += '-' + key;
+                }
                 if (pathname.option != '') {
                     a.href += '-' + pathname.option;
                 }
             }
-            if ((key != 'embed' && key != 'editor') && (pathname.option != key)) {
+            if ((key != 'embed' && key != 'editor')) {
                 if (pathname.file != '') {
                     a.href += '-' + pathname.file;
                 }
-                a.href += '-' + key;
+                
+                if (pathname.option != key) {
+                    a.href += '-' + key;
+                }
             }
 
             // <a> style
