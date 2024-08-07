@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="leaflet-1.9.4/plugins/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="leaflet-1.9.4/plugins/leaflet.icon-material.css">
     
+    <!-- Alertbox -->
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
+
     <!-- JS -->
     <script src="leaflet-1.9.4/leaflet.js"></script>
     <script src="leaflet-1.9.4/plugins/leaflet-geoman.min.js"></script>
@@ -45,7 +49,7 @@
     <div class="menu-editor">
 			<div class="flex-end fd-col fw-on gap-5" id="MenuEditor">
 				<button class="button is-TD-lime" onclick="generateGeoJson()" style="font-size: 12px; width: 60px;">Save</button>
-				<a class="button is-TD-red" href="" style="font-size: 12px; width: 60px;">Cancel</a>
+				<button class="button is-TD-red" onclick="CancelButton()" style="font-size: 12px; width: 60px;">Cancel</button>
 			</div>
 		</div>
 

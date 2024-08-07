@@ -58,8 +58,8 @@ async function BuildMenu() {
 async function BuildOptions() {
     const pathname = parsePathName();
     const hash = parseHash();
-    const response0 = await fetch("options.json", {cache: 'no-store'});
-	const options_data = await response0.json();
+    const response = await fetch("options.json", {cache: 'no-store'});
+	const options_data = await response.json();
     const option_div = document.getElementById("Options");
     const option_button_div = document.getElementById("OptionsButtons");
 

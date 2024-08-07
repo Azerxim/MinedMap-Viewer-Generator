@@ -442,16 +442,16 @@ window.createMap = function () {
 
 		// listen to when drawing mode gets enabled
 		map.on("pm:drawstart", function (e) {
-			console.log(e);
+			// console.log(e);
 		});
 		
 		// listen to when drawing mode gets disabled
 		map.on("pm:drawend", function (e) {
-			console.log(e);
+			// console.log(e);
 		});
 
 		map.on('pm:create', (e) => {
-			console.log(e)
+			// console.log(e)
 			if (e.shape == 'Line') {
 				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'latlngs': e.layer._latlngs, 'save': true});
 			}
@@ -470,7 +470,7 @@ window.createMap = function () {
 
 			// listen to changes on the new layer
 			e.layer.on("pm:edit", function (x) {
-				console.log("edit", x);
+				// console.log("edit", x);
 				for (let index = 0; index < JSONLayers.length; index++) {
 					const element = JSONLayers[index];
 					if (element.id == e.layer._leaflet_id) {
@@ -505,12 +505,12 @@ window.createMap = function () {
 		});
 
 		map.on('pm:remove', (e) => {
-			console.log(e);
+			// console.log(e);
 			for (let index = 0; index < JSONLayers.length; index++) {
 				const element = JSONLayers[index];
 				if (element.id == e.layer._leaflet_id) {
 					element.save = false;
-					console.log(JSONLayers);
+					// console.log(JSONLayers);
 				}
 			}
 		});
