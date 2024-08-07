@@ -1,10 +1,3 @@
-async function fetchJSONData(path) {
-	const response = await fetch(path, {cache: 'no-store'});
-	const res = await response.json();
-    console.log(res);
-    return res
-}
-
 const parsePathName = function () {
 	const pathname = window.location.pathname.substring(1);
     const args = {data: 'overworld', file: '', option: ''};
@@ -32,6 +25,23 @@ const parsePathName = function () {
             args[key] = part
 		}
 	}
+	return args;
+}
+
+const parseSearch = function () {
+	const args = {};
+
+	if (window.location.search) {
+		const parts = window.location.search.substring(1).split('&');
+
+		for (const part of parts) {
+			const key_value = part.split('=');
+			const key = key_value[0], value = key_value.slice(1).join('=');
+
+			args[key] = value;
+		}
+	}
+
 	return args;
 }
 
