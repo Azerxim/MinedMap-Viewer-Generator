@@ -504,6 +504,7 @@ window.createMap = function () {
 
 		updateHash = function () {
 			window.location.hash = makeHash();
+			updateOptions();
 		};
 
 		const refreshHash = function (ev) {

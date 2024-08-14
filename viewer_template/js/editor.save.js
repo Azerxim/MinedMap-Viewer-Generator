@@ -17,6 +17,9 @@ function CancelButton() {
 
 function generateGeoJson(){
 	console.log(JSONLayers);
+	
+	// Inset actions here
+
 	swal({
 		title: "Oops...",
 		text: "The operation was not successful",
