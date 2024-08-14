@@ -57,17 +57,9 @@ async function BuildMenu() {
 
 async function BuildOptions() {
     const pathname = parsePathName();
-    const hash = parseHash();
     const response = await fetch("options.json", {cache: 'no-store'});
 	const options_data = await response.json();
     const option_div = document.getElementById("Options");
-
-    if (isNaN(hash.zoom))
-        hash.zoom = 0;
-    if (isNaN(hash.x))
-        hash.x = spawn.x;
-    if (isNaN(hash.z))
-        hash.z = spawn.z;
 
     for (var key in options_data['options']) {
         if (!options_data['options'][key].hidden) {
@@ -105,11 +97,6 @@ async function BuildOptions() {
                     a.href += '-' + key;
                 }
             }
-            a.href += '#x='+hash.x+'&z='+hash.z;
-
-            if (hash.zoom != 0) {
-                a.href += '&zoom='+hash.zoom;
-            }
 
             // <a> style
             a.style = 'justify-content: start';
@@ -137,9 +124,11 @@ async function updateOptions() {
     if (isNaN(hash.zoom))
         hash.zoom = 0;
     if (isNaN(hash.x))
-        hash.x = spawn.x;
+        hash.x = 0;
     if (isNaN(hash.z))
-        hash.z = spawn.z;
+        hash.z = 0;
+    if (isNaN(hash.light))
+        hash.light = 0;
     
     for (var key in options_data['options']) {
         if (!options_data['options'][key].hidden) {
@@ -165,9 +154,10 @@ async function updateOptions() {
             }
             a.href += '#x='+hash.x+'&z='+hash.z;
 
-            if (hash.zoom != 0) {
+            if (hash.zoom != 0)
                 a.href += '&zoom='+hash.zoom;
-            }
+            if (hash.light != 0)
+                a.href += '&light='+hash.light;
         }
     }
 }
