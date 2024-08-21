@@ -45,6 +45,39 @@ const parseSearch = function () {
 	return args;
 }
 
+const updateMarkerCoords = function (JSONLayers, e) {
+    for (let index = 0; index < JSONLayers.length; index++) {
+        const element = JSONLayers[index];
+        if (element.id == e.layer._leaflet_id) {
+            if (e.shape == 'Line') {
+                element.latlngs = e.layer._latlngs;
+            }
+            else if (e.shape == 'Polygon' || e.shape == 'Rectangle') {
+                element.latlngs = e.layer._latlngs[0];
+            }
+            else if (e.shape == 'Marker') {
+                element.x = e.layer._latlng.lng;
+                element.z = e.layer._latlng.lat;
+            }
+            else if (e.shape == 'Text') {
+                element.x = e.layer._latlng.lng;
+                element.z = e.layer._latlng.lat;
+                element.text = e.layer.options.text;
+            }
+            else if (e.shape == 'Circle') {
+                element.x = e.layer._latlng.lng;
+                element.z = e.layer._latlng.lat;
+                element.radius = e.layer._radius;
+            }
+        }
+        return JSONLayers;
+    }
+}
+
+function logEvent(e) {
+    console.log(e);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const $button = Array.prototype.slice.call(document.querySelectorAll('.button-apparition'), 0);
 

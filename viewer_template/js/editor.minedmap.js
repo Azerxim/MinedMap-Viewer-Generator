@@ -412,13 +412,23 @@ window.createMap = function () {
 		const coordControl = new CoordControl();
 		coordControl.addTo(map);
 
+		// Spawn
+		let spawnMarker;
+		if (pathname.data != 'end'){
+			spawnMarker = L.marker([-spawn.z, spawn.x], {icon: SpawnIcon, pmIgnore: false}).addTo(map) // [-z, x]
+				.bindTooltip('<b class="ultradarkblue">Spawn</b>');
+		}
+		else {
+			spawnMarker = L.marker([0, 0], {icon: SpawnIcon, pmIgnore: false}).addTo(map) // [-z, x]
+				.bindTooltip('<b class="ultradarkblue">Spawn</b>');
+		}
+
 		//===========================
 		// EDITOR
 		var EditorLayer = new MinedMapLayer(mipmaps, 'map');
 		map.pm.setGlobalOptions({layerGroup: EditorLayer})
 		EditorLayer.addTo(map);
 
-		// add Leaflet-Geoman controls with some options to the map
 		map.pm.addControls({
 			position: 'topleft',
 			drawMarker: true,
@@ -433,98 +443,51 @@ window.createMap = function () {
 			dragMode: true,
 			removalMode: true,
 		});
-
-		// language
-		map.pm.setLang('fr');
-
-		// get array of all available shapes
+		map.pm.setLang('en');
 		map.pm.Draw.getShapes();
 
-		// listen to when drawing mode gets enabled
-		map.on("pm:drawstart", function (e) {
-			// console.log(e);
-		});
-		
-		// listen to when drawing mode gets disabled
-		map.on("pm:drawend", function (e) {
-			// console.log(e);
-		});
-
 		map.on('pm:create', (e) => {
-			// console.log(e)
 			if (e.shape == 'Line') {
-				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'latlngs': e.layer._latlngs, 'save': true});
+				JSONLayers.push({'pm': "create", 'id': e.layer._leaflet_id, 'type': e.shape, 'latlngs': e.layer._latlngs, 'save': true});
 			}
 			else if (e.shape == 'Polygon' || e.shape == 'Rectangle') {
-				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'latlngs': e.layer._latlngs[0], 'save': true});
+				JSONLayers.push({'pm': "create", 'id': e.layer._leaflet_id, 'type': e.shape, 'latlngs': e.layer._latlngs[0], 'save': true});
 			}
 			else if (e.shape == 'Marker') {
-				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'save': true});
+				JSONLayers.push({'pm': "create", 'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'save': true});
 			}
 			else if (e.shape == 'Text') {
-				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'text': e.layer.options.text, 'save': true});
+				JSONLayers.push({'pm': "create", 'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'text': e.layer.options.text, 'save': true});
 			}
 			else if (e.shape == 'Circle') {
-				JSONLayers.push({'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'radius': e.layer._radius, 'save': true});
+				JSONLayers.push({'pm': "create", 'id': e.layer._leaflet_id, 'type': e.shape, 'x': e.layer._latlng.lng, 'z': e.layer._latlng.lat, 'radius': e.layer._radius, 'save': true});
 			}
+			logEvent(JSONLayers);
 
-			// listen to changes on the new layer
 			e.layer.on("pm:edit", function (x) {
-				// console.log("edit", x);
+				JSONLayers = updateMarkerCoords(JSONLayers, e);
+				logEvent(JSONLayers);
+			});
+
+			e.layer.on('pm:cut', logEvent);
+		  
+			e.layer.on('pm:remove', (x) => {
 				for (let index = 0; index < JSONLayers.length; index++) {
 					const element = JSONLayers[index];
-					if (element.id == e.layer._leaflet_id) {
-						if (e.shape == 'Line') {
-							element.latlngs = e.layer._latlngs;
-						}
-						else if (e.shape == 'Polygon' || e.shape == 'Rectangle') {
-							element.latlngs = e.layer._latlngs[0];
-						}
-						else if (e.shape == 'Marker') {
-							element.x = e.layer._latlng.lng;
-							element.z = e.layer._latlng.lat;
-						}
-						else if (e.shape == 'Text') {
-							element.x = e.layer._latlng.lng;
-							element.z = e.layer._latlng.lat;
-							element.text = e.layer.options.text;
-						}
-						else if (e.shape == 'Circle') {
-							element.x = e.layer._latlng.lng;
-							element.z = e.layer._latlng.lat;
-							element.radius = e.layer._radius;
-						}
+					if (element.id == x.layer._leaflet_id) {
+						element.save = false;
+						logEvent(JSONLayers);
 					}
 				}
 			});
-
-			// JSONLayers.push({'type': e.shape});
-			// console.log(e.shape);
-			// console.log(e.layer._latlngs);
-			// console.log(e.layer);
 		});
 
-		map.on('pm:remove', (e) => {
-			// console.log(e);
-			for (let index = 0; index < JSONLayers.length; index++) {
-				const element = JSONLayers[index];
-				if (element.id == e.layer._leaflet_id) {
-					element.save = false;
-					// console.log(JSONLayers);
-				}
-			}
+		spawnMarker.on('pm:edit', (e) => {
+			logEvent(e);
 		});
+
+		// EDITOR END
 		//===========================
-
-		// Spawn
-		if (pathname.data != 'end'){
-			L.marker([-spawn.z, spawn.x], {icon: SpawnIcon}).addTo(map) // [-z, x]
-				.bindTooltip('<b class="ultradarkblue">Spawn</b>');
-		}
-		else {
-			L.marker([0, 0], {icon: SpawnIcon}).addTo(map) // [-z, x]
-				.bindTooltip('<b class="ultradarkblue">Spawn</b>');
-		}
 
 		map.on('mousemove', function(e) {
 			coordControl.update(Math.round(e.latlng.lng), Math.round(-e.latlng.lat));
