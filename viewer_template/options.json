@@ -1,23 +1,28 @@
 {
-    "options": {
-        "embed": {
-            "title": "Embed",
-            "icon": "fa-solid fa-eye",
-            "hidden": 0
-        },
-        "editor": {
-            "title": "Editor",
-            "icon": "fa-solid fa-pen-to-square",
-            "hidden": 1
-        }
+  "options": {
+    "embed": {
+      "title": "Embed",
+      "icon": "fa-solid fa-eye",
+      "hidden": 0
     },
-    "buttons": {
-        "github": {
-            "href": "https://github.com/Azerxim/MinedMap-Viewer-Generator",
-            "title": "GitHub",
-            "icon": "fa-brands fa-github",
-            "target": "_blank",
-            "hidden": 0
-        }
+    "embedplus": {
+      "title": "Embed Plus",
+      "icon": "fa-solid fa-eye",
+      "hidden": 1
+    },
+    "editor": {
+      "title": "Editor",
+      "icon": "fa-solid fa-pen-to-square",
+      "hidden": 1
     }
+  },
+  "buttons": {
+    "github": {
+      "href": "https://github.com/Azerxim/MinedMap-Viewer-Generator",
+      "title": "GitHub",
+      "icon": "fa-brands fa-github",
+      "target": "_blank",
+      "hidden": 0
+    }
+  }
 }

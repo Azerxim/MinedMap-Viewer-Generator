@@ -48,6 +48,7 @@ if __name__ == "__main__":
     # •••••••••••••••••••••••••••
     print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
     print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Converting the save{utils.bcolors.RESET}')
+    print(f'{pathMap}/level.dat')
     if file.exist(f'{pathMap}/level.dat'):
         pathLevel = f'{pathMap}/level.dat'
         print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        level.dat{utils.bcolors.RESET}')
@@ -60,14 +61,22 @@ if __name__ == "__main__":
     print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Overworld{utils.bcolors.RESET}')
 
     # Nether
-    maps['vanilla']['nether:roof'] = maps['vanilla']['nether:surface'] = f'{pathMap}/DIM-1'
-    file.copy(f'"{pathLevel}"', f'"{maps["vanilla"]["nether:surface"]}/level.dat"')
-    print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Nether{utils.bcolors.RESET}')
+    if file.exist(f'{pathMap}/DIM-1/'):
+        maps['vanilla']['nether:roof'] = maps['vanilla']['nether:surface'] = f'{pathMap}/DIM-1'
+        file.copy(f'"{pathLevel}"', f'"{maps["vanilla"]["nether:surface"]}/level.dat"')
+        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        Nether{utils.bcolors.RESET}')
+    else:
+        maps['vanilla']['nether:roof'] = maps['vanilla']['nether:surface'] = ''
+        print(f'{utils.bcolors.green}NOK{utils.bcolors.RESET}       Nether{utils.bcolors.RESET}')
 
     # The End
-    maps['vanilla']['end'] = f'{pathMap}/DIM1'
-    file.copy(f'"{pathLevel}"', f'"{maps["vanilla"]["end"]}/level.dat"')
-    print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        End{utils.bcolors.RESET}')
+    if file.exist(f'{pathMap}/DIM1/'):
+        maps['vanilla']['end'] = f'{pathMap}/DIM1'
+        file.copy(f'"{pathLevel}"', f'"{maps["vanilla"]["end"]}/level.dat"')
+        print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        End{utils.bcolors.RESET}')
+    else:
+        maps['vanilla']['end'] = ''
+        print(f'{utils.bcolors.green}NOK{utils.bcolors.RESET}       End{utils.bcolors.RESET}')
 
     # Dimensions custom
     print(f'{utils.bcolors.purple}INFO{utils.bcolors.RESET}      Custom Dimensions{utils.bcolors.RESET}')
@@ -76,17 +85,20 @@ if __name__ == "__main__":
     for rootdir, dirs, files in os.walk(pathDC):
         parent = mef.MEF(rootdir, f'{pathDC}/', "")
         parentd = parent.split("/")
-        for subdir in dirs:
-            if subdir == 'region':
-                match len(parentd):
-                    case 2:
+        lparentd = len(parentd)
+        try:
+            for subdir in dirs:
+                if subdir == 'region':
+                    if (lparentd == 2):
                         maps['dimensions'][f'{parentd[0]}:{parentd[1]}'] = os.path.join(rootdir)
                         try:
                             pathDCs[parentd[0]].append(parentd[1])
                         except:
                             pathDCs[parentd[0]] = []
                             pathDCs[parentd[0]].append(parentd[1])
-    if pathDCs is {}:
+        except:
+            pass
+    if pathDCs == {}:
         print(f'{utils.bcolors.green}OK{utils.bcolors.RESET}        No custom dimension{utils.bcolors.RESET}')
     for one in pathDCs:
         for two in pathDCs[one]:
@@ -103,19 +115,20 @@ if __name__ == "__main__":
     for one in maps:
         if one != "date":
             for map in maps[one]:
-                print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
-                print(f'{utils.bcolors.purple}GENERATE{utils.bcolors.RESET}  {map}{utils.bcolors.RESET}')
-                exe = 'MinedMap-2.2.0'
-                if ':surface' in map:
-                    exe = '1.19/Nether'
-                name = mef.MEF(map, 'nether:roof', 'nether_roof')
-                name = mef.MEF(name, 'nether:surface', 'nether')
-                name = mef.MEF(name, ':', '_')
-                if maps[one][map] != '':
-                    if (not file.exist(f'{pathExport}/{name}')):
-                        file.createdir(f'{pathExport}/{name}')
-                    generate(f'{MinedMap}/{exe}', f'{maps[one][map]}', f'{pathExport}/{name}')
-                    export_maps[one][map] = name
+                if map != '':
+                    print(f'{utils.bcolors.white}------------------------------{utils.bcolors.RESET}')
+                    print(f'{utils.bcolors.purple}GENERATE{utils.bcolors.RESET}  {map}{utils.bcolors.RESET}')
+                    exe = 'MinedMap-2.2.0'
+                    if ':surface' in map:
+                        exe = '1.19/Nether'
+                    name = mef.MEF(map, 'nether:roof', 'nether_roof')
+                    name = mef.MEF(name, 'nether:surface', 'nether')
+                    name = mef.MEF(name, ':', '_')
+                    if maps[one][map] != '':
+                        if (not file.exist(f'{pathExport}/{name}')):
+                            file.createdir(f'{pathExport}/{name}')
+                        generate(f'{MinedMap}/{exe}', f'{maps[one][map]}', f'{pathExport}/{name}')
+                        export_maps[one][map] = name
     export_maps['date'] = dt.date.today().strftime("%d/%m/%Y")
     file.create(f'{pathExport}/maps.json')
     file.json_write(f'{pathExport}/maps.json', export_maps)

@@ -80,7 +80,7 @@ async function BuildOptions() {
 
             // <a> href
             a.href = pathname.data
-            if ((key == 'embed' || key == 'editor')) {
+            if ((key == 'embed' || key == 'embedplus' || key == 'editor')) {
                 if (pathname.file != key) {
                     a.href += '-' + key;
                 }
@@ -88,7 +88,7 @@ async function BuildOptions() {
                     a.href += '-' + pathname.option;
                 }
             }
-            if ((key != 'embed' && key != 'editor')) {
+            if ((key != 'embed' && key != 'embedplus' && key != 'editor')) {
                 if (pathname.file != '') {
                     a.href += '-' + pathname.file;
                 }
@@ -135,7 +135,7 @@ async function updateOptions() {
             a = document.getElementById('Option_'+key);
             // <a> href
             a.href = pathname.data
-            if ((key == 'embed' || key == 'editor')) {
+            if ((key == 'embed' || key == 'embedplus' || key == 'editor')) {
                 if (pathname.file != key) {
                     a.href += '-' + key;
                 }
@@ -143,7 +143,7 @@ async function updateOptions() {
                     a.href += '-' + pathname.option;
                 }
             }
-            if ((key != 'embed' && key != 'editor')) {
+            if ((key != 'embed' && key != 'embedplus' && key != 'editor')) {
                 if (pathname.file != '') {
                     a.href += '-' + pathname.file;
                 }
@@ -187,15 +187,15 @@ async function BuildButtons() {
             }
 
             // <a> style
-            a.style = 'justify-content: start'
+            a.style = 'justify-content: start';
 
             // build button
             if (options_data['buttons'][key].icon) {
-                i.className = options_data['buttons'][key].icon
-                a.appendChild(i)
+                i.className = options_data['buttons'][key].icon;
+                a.appendChild(i);
             }
-            a.appendChild(span)
-            option_div.appendChild(a)
+            a.appendChild(span);
+            option_div.appendChild(a);
         }
     }
 }
