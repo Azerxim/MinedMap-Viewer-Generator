@@ -1,5 +1,5 @@
 const parsePathName = function () {
-	const pathname = window.location.pathname.substring(1);
+	const pathname = window.location.pathname.split('/').pop();
     const args = {data: 'overworld', file: '', option: ''};
 
 	if (pathname) {
@@ -9,13 +9,16 @@ const parsePathName = function () {
             let key;
             switch (part) {
                 case 'embed':
+                case 'embedfull':
                 case 'embedplus':
                 case 'editor':
                     key = 'file';
                     break;
 
                 case 'civilisations':
-                case 'markets':
+                case 'commerces':
+                case 'alliances':
+                case 'religions':
                     key = 'option';
                     break;
             
@@ -99,4 +102,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-  

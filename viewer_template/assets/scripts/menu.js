@@ -1,7 +1,7 @@
 async function BuildDate() {
-    const response = await fetch("data/maps.json", {cache: 'no-store'});
+    const response = await fetch("assets/data/maps.json", {cache: 'no-store'});
 	const maps_data = await response.json();
-    // console.log(maps_data);
+    console.log(maps_data);
     const maps_date = document.getElementById("maps_date");
     const txt = document.createTextNode(maps_data.date);
     maps_date.appendChild(txt);
@@ -10,11 +10,12 @@ async function BuildDate() {
 async function BuildMenu() {
     const pathname = parsePathName();
     const hash = parseHash();
-    const maps = await fetch("data/maps.json", {cache: 'no-store'});
+    const maps = await fetch("assets/data/maps.json", {cache: 'no-store'});
 	const maps_data = await maps.json();
     const maps_menu = document.getElementById("Menu");
 
     for (var key in maps_data.vanilla) {
+        var li = document.createElement('li');
         var a = document.createElement('a');
         var txt = document.createTextNode(key);
         a.appendChild(txt);
@@ -25,16 +26,17 @@ async function BuildMenu() {
         if (pathname.option) {
             a.href += '-' + pathname.option
         }
+        a.className = 'justify-end flex-row gap-2 rounded-box rounded-3xl';
         if (maps_data.vanilla[key] == pathname.data) {
-            a.className = 'menu-button button is-TD-ultradarkblue';
+            a.className += ' bg-primary text-white';
         }
-        else {
-            a.className = 'menu-button button is-TD-smoothwhite';
-        }
-        maps_menu.appendChild(a);
+        
+        li.appendChild(a);
+        maps_menu.appendChild(li);
     }
 
     for (var key in maps_data.dimensions) {
+        var li = document.createElement('li');
         var a = document.createElement('a');
         var txt = document.createTextNode(key);
         a.appendChild(txt);
@@ -45,13 +47,13 @@ async function BuildMenu() {
         if (pathname.option) {
             a.href += '-' + pathname.option
         }
+        a.className = 'justify-end flex-row gap-2 rounded-box rounded-3xl';
         if (maps_data.dimensions[key] == pathname.data) {
-            a.className = 'menu-button button is-TD-ultradarkblue';
+            a.className += ' bg-primary text-white';
         }
-        else {
-            a.className = 'menu-button button is-TD-smoothwhite';
-        }
-        maps_menu.appendChild(a);
+
+        li.appendChild(a);
+        maps_menu.appendChild(li);
     }
 }
 
@@ -59,10 +61,11 @@ async function BuildOptions() {
     const pathname = parsePathName();
     const response = await fetch("options.json", {cache: 'no-store'});
 	const options_data = await response.json();
-    const option_div = document.getElementById("Options");
+    const option_div = document.getElementById("OptionsMenu");
 
     for (var key in options_data['options']) {
         if (!options_data['options'][key].hidden) {
+            var li = document.createElement('li');
             var a = document.createElement('a');
             var i = document.createElement('i');
             var span = document.createElement('span');
@@ -70,17 +73,14 @@ async function BuildOptions() {
             span.appendChild(txt)
 
             // <a> classname
-            a.className = 'menu-button-option button gap-5'
+            a.className = 'justify-end flex-row gap-2 rounded-box rounded-3xl ' + options_data['options'][key].class;
             if (key == pathname.option || key == pathname.file) {
-                a.className += ' is-TD-ultradarkblue';
-            }
-            else {
-                a.className += ' is-TD-smoothwhite';
+                a.className += ' bg-primary text-white';
             }
 
             // <a> href
             a.href = pathname.data
-            if ((key == 'embed' || key == 'embedplus' || key == 'editor')) {
+            if ((key == 'embed' || key == 'embedfull' || key == 'embedplus' || key == 'editor')) {
                 if (pathname.file != key) {
                     a.href += '-' + key;
                 }
@@ -88,7 +88,7 @@ async function BuildOptions() {
                     a.href += '-' + pathname.option;
                 }
             }
-            if ((key != 'embed' && key != 'embedplus' && key != 'editor')) {
+            if ((key != 'embed' && key != 'embedfull' && key != 'embedplus' && key != 'editor')) {
                 if (pathname.file != '') {
                     a.href += '-' + pathname.file;
                 }
@@ -98,18 +98,16 @@ async function BuildOptions() {
                 }
             }
 
-            // <a> style
-            a.style = 'justify-content: start';
-
             a.id = 'Option_'+key;
 
+            a.appendChild(span);
             // build button
             if (options_data['options'][key].icon) {
-                i.className = options_data['options'][key].icon;
+                i.className = options_data['options'][key].icon + ' ml-2';
                 a.appendChild(i);
             }
-            a.appendChild(span);
-            option_div.appendChild(a);
+            li.appendChild(a);
+            option_div.appendChild(li);
         }
     }
 }
@@ -135,7 +133,7 @@ async function updateOptions() {
             a = document.getElementById('Option_'+key);
             // <a> href
             a.href = pathname.data
-            if ((key == 'embed' || key == 'embedplus' || key == 'editor')) {
+            if ((key == 'embed' || key == 'embedfull' || key == 'embedplus' || key == 'editor')) {
                 if (pathname.file != key) {
                     a.href += '-' + key;
                 }
@@ -143,7 +141,7 @@ async function updateOptions() {
                     a.href += '-' + pathname.option;
                 }
             }
-            if ((key != 'embed' && key != 'embedplus' && key != 'editor')) {
+            if ((key != 'embed' && key != 'embedfull' && key != 'embedplus' && key != 'editor')) {
                 if (pathname.file != '') {
                     a.href += '-' + pathname.file;
                 }
@@ -178,16 +176,14 @@ async function BuildButtons() {
             span.appendChild(txt)
 
             // <a> classname
-            a.className = 'menu-button-option button gap-5 is-TD-smoothwhite';
+            // a.className = 'menu-button-option button gap-5 is-TD-smoothwhite';
+            a.className = 'btn gap-1 rounded-box rounded-3xl ' + options_data['buttons'][key].class;
 
             // <a> href
             a.href = options_data['buttons'][key].href;
             if (options_data['buttons'][key].target != '') {
                 a.target = options_data['buttons'][key].target;
             }
-
-            // <a> style
-            a.style = 'justify-content: start';
 
             // build button
             if (options_data['buttons'][key].icon) {
@@ -198,4 +194,21 @@ async function BuildButtons() {
             option_div.appendChild(a);
         }
     }
+}
+
+function highlightLayerControl() {
+    // Sélectionne tous les éléments avec la classe 'leaflet-control-layers'
+    const layer = document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div");
+    layer.className += ' bg-base-200';
+
+    const checkbox = document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div > section > div.leaflet-control-layers-overlays > label > span > input");
+    checkbox.className += ' checkbox checkbox-xs';
+    const label = document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div > section > div.leaflet-control-layers-overlays > label > span");
+    label.className += ' flex items-center gap-2';
+}
+
+function highlightLayerControlEmbed() {
+    // Sélectionne tous les éléments avec la classe 'leaflet-control-layers'
+    const layer = document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div");
+    layer.computedStyleMap.display = 'none';
 }

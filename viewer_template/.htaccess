@@ -13,13 +13,9 @@ Rewriterule ^([a-z]+?)-embed$ embed.html?data=$1 [QSA,L]
 Rewriterule ^([a-z]+?)_([a-z]+?)-embed$ embed.html?data=$1_$2 [QSA,L]
 Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embed$ embed.html?data=$1_$2_$3 [QSA,L]
 
-Rewriterule ^([a-z]+?)-embedplus$ embedplus.html?data=$1 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)-embedplus$ embedplus.html?data=$1_$2 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embedplus$ embedplus.html?data=$1_$2_$3 [QSA,L]
-
-Rewriterule ^([a-z]+?)-editor$ editor.html?data=$1 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)-editor$ editor.html?data=$1_$2 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-editor$ editor.html?data=$1_$2_$3 [QSA,L]
+Rewriterule ^([a-z]+?)-embedfull$ embedfull.html?data=$1 [QSA,L]
+Rewriterule ^([a-z]+?)_([a-z]+?)-embedfull$ embedfull.html?data=$1_$2 [QSA,L]
+Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embedfull$ embedfull.html?data=$1_$2_$3 [QSA,L]
 
 #============
 # Options
@@ -31,10 +27,6 @@ Rewriterule ^([a-z]+?)-embed-([a-z]+?)$ embed.html?data=$1 [QSA,L]
 Rewriterule ^([a-z]+?)_([a-z]+?)-embed-([a-z]+?)$ embed.html?data=$1_$2 [QSA,L]
 Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embed-([a-z]+?)$ embed.html?data=$1_$2_$3 [QSA,L]
 
-Rewriterule ^([a-z]+?)-embedplus-([a-z]+?)$ embedplus.html?data=$1 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)-embedplus-([a-z]+?)$ embedplus.html?data=$1_$2 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embedplus-([a-z]+?)$ embedplus.html?data=$1_$2_$3 [QSA,L]
-
-Rewriterule ^([a-z]+?)-editor-([a-z]+?)$ editor.html?data=$1 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)-editor-([a-z]+?)$ editor.html?data=$1_$2 [QSA,L]
-Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-editor-([a-z]+?)$ editor.html?data=$1_$2_$3 [QSA,L]
+Rewriterule ^([a-z]+?)-embedfull-([a-z]+?)$ embedfull.html?data=$1 [QSA,L]
+Rewriterule ^([a-z]+?)_([a-z]+?)-embedfull-([a-z]+?)$ embedfull.html?data=$1_$2 [QSA,L]
+Rewriterule ^([a-z]+?)_([a-z]+?)_([a-z]+?)-embedfull-([a-z]+?)$ embedfull.html?data=$1_$2_$3 [QSA,L]
